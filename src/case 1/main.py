@@ -19,10 +19,6 @@ class TasksTable:
         tasks_list: List[str],
         pull: MsgoPull,
     ):
-        """
-        Notes:
-            в userdata последней строки хранится суммарное время расчета всех задач таблицы
-        """
         rows = []
 
         for task_dict_json in tasks_list:
