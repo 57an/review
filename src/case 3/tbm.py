@@ -2,7 +2,7 @@ from .utils import TopologyBusbar
 
 class TopologyBranchModel:
     """
-    Виртуальная модель ветви по аналогии с SetPath
+    Виртуальная модель ветви
 
     Notes:
         Содержит набор линий от busbar1 до busbar2 в порядке их расположения в списке lines
@@ -49,7 +49,12 @@ class TopologyBranchModel:
                     inner_busbars.add(busbar)
         return list(inner_busbars)
 
-    def loads(self, data: dict, read_only):
+    @classmethod
+    def from_dict(cls, data: dict, read_only):
+        tbm = cls()
+        tbm._loads(data, read_only)
+
+    def _loads(self, data: dict, read_only):
         self._uid = data['full_name']
         self._name = data['name']
         self._is_tap = data['is_tap']
