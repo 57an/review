@@ -1,4 +1,10 @@
-from .utils import TopologyBusbar
+class TopologyBusbar:
+    """Вспомогательный объект, который может использоваться при создании TopologyBranchModel"""
+    ...
+
+    def get_elements(self, **kwargs):
+        return []
+
 
 class TopologyBranchModel:
     """
