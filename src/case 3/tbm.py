@@ -21,9 +21,7 @@ class TopologyBranchModel:
         self._lines = []
         self._uid = None
         if tb is not None:
-            self._elements = self._remove_cycling_elements(
-                tb.get_elements(with_start=True, with_end=True, only_busbars=True, only_connected=only_connected)
-            )
+            self._elements = tb.get_elements(only_connected=only_connected)
             self._lines = self.__find_inner_lines()
             self._uid = self._create_uid()
 
@@ -40,14 +38,6 @@ class TopologyBranchModel:
 
     def add_switches(self, switches):
         self._switches.extend(switches)
-
-    def get_inner_busbars(self) -> list:
-        inner_busbars = set()
-        for line in self._lines:
-            for busbar in line.bus1.cBusBar, line.bus2.cBusBar:
-                if busbar not in self.busbars:
-                    inner_busbars.add(busbar)
-        return list(inner_busbars)
 
     @classmethod
     def from_dict(cls, data: dict, read_only):
@@ -89,20 +79,5 @@ class TopologyBranchModel:
     def _create_uid(self):
         return ''
 
-    def _remove_cycling_elements(self, *args):
-        return []
-
     def _get_internal_busbars(self):
         return []
-
-    @property
-    def busbar1(self):
-        return self._elements[0]
-
-    @property
-    def busbar2(self):
-        return self._elements[-1]
-
-    @property
-    def busbars(self):
-        return self.busbar1, self.busbar2
